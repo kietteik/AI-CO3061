@@ -6,28 +6,6 @@ class SolveNQ:
     def __init__(self, nrange):
         self.range = nrange
 
-    def solve(self):
-        case = int(input("Choose search algorithm:\n1.DFS\n2.BFS\n3.Heuristics "))
-        start_time = time.time()
-        if case == 1:
-            print("Using DFS...")
-            board = []
-            result = self.byDFS(board)
-            result = board
-        elif case == 2:
-            print("Using BFS...")
-            board = [[]]
-            result = self.byBFS(board)
-        elif case == 3:
-            print("Using Heuristics...")
-            result = self.byHeur()
-        else:
-            raise(SyntaxError)
-        end_time = time.time()
-        print(result)
-        print("--- %s seconds ---" % (end_time - start_time))
-        return result
-
     def byDFS(self, board):
         if (len(board) >= self.range):
             return True
@@ -71,7 +49,10 @@ class SolveNQ:
                         conflict = nextConflict
                         boardChanged = 1
             if (boardChanged == 0):
-                initBoard = rd.sample(range(0, self.range), self.range)
+                # print('After:  ', initBoard)
+                initBoard[rd.randint(0, self.range-1)] = rd.randint(
+                    0, self.range-1)
+                # print('Before: ', initBoard)
         return initBoard
 
     def notConflict(self, board):
@@ -94,9 +75,35 @@ class SolveNQ:
 
     def finalState(self, board):
         for i in range(self.range):
-            if (self.conflictValue(i, board, board[i]) != 0):
-                return False
+            for j in range(self.range):
+                if (i == j):
+                    continue
+                if (abs(j-i) == abs(board[j]-board[i])) | (board[i] == board[j]):
+                    return False
         return True
+
+    def solve(self):
+        case = int(
+            input("Choose search algorithm:\n1.DFS\n2.BFS\n3.Heuristics\n"))
+        start_time = time.time()
+        if case == 1:
+            print("Using DFS...")
+            board = []
+            result = self.byDFS(board)
+            result = board
+        elif case == 2:
+            print("Using BFS...")
+            board = [[]]
+            result = self.byBFS(board)
+        elif case == 3:
+            print("Using Heuristics...")
+            result = self.byHeur()
+        else:
+            raise(SyntaxError)
+        end_time = time.time()
+        print(result)
+        print("--- %s seconds ---" % (end_time - start_time))
+        return result
 
 
 def printBoard(board):
