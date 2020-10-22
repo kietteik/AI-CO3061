@@ -30,6 +30,8 @@ class SolveNQ:
         return []
 
     def byHeur(self):
+        if self.range <= 3 & self.range != 1:
+            return[]
         initBoard = rd.sample(range(0, self.range), self.range)
         while (not self.finalState(initBoard)):
             boardChanged = 0
@@ -87,21 +89,21 @@ class SolveNQ:
             input("Choose search algorithm:\n1.DFS\n2.BFS\n3.Heuristics\n"))
         start_time = time.time()
         if case == 1:
-            print("Using DFS...")
+            print("Using DFS...", end=' ')
             board = []
             result = self.byDFS(board)
             result = board
         elif case == 2:
-            print("Using BFS...")
+            print("Using BFS...", end=' ')
             board = [[]]
             result = self.byBFS(board)
         elif case == 3:
-            print("Using Heuristics...")
+            print("Using Heuristics...", end=' ')
             result = self.byHeur()
         else:
             raise(SyntaxError)
         end_time = time.time()
-        print(result)
+        print("DONE")
         print("--- %s seconds ---" % (end_time - start_time))
         return result
 
@@ -118,3 +120,4 @@ def printBoard(board):
 if __name__ == "__main__":
     a = SolveNQ(int(input("Enter n:")))
     resutl = a.solve()
+    print(resutl)
