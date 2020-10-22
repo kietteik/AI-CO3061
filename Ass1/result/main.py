@@ -6,8 +6,29 @@ class SolveNQ:
     def __init__(self, nrange):
         self.range = nrange
 
+    def solve(self):
+        case = int(input("Choose search algorithm:\n1.DFS\n2.BFS\n3.Heuristics "))
+        start_time = time.time()
+        if case == 1:
+            print("Using DFS...")
+            board = []
+            result = self.byDFS(board)
+            result = board
+        elif case == 2:
+            print("Using BFS...")
+            board = [[]]
+            result = self.byBFS(board)
+        elif case == 3:
+            print("Using Heuristics...")
+            result = self.byHeur()
+        else:
+            raise(SyntaxError)
+        end_time = time.time()
+        print(result)
+        print("--- %s seconds ---" % (end_time - start_time))
+        return result
+
     def byDFS(self, board):
-        printBoard(board)
         if (len(board) >= self.range):
             return True
         for i in range(self.range):
@@ -84,15 +105,9 @@ def printBoard(board):
     for i in board:
         print("-"*(a*4+1))
         print("|"+"   |"*i+" Q |"+"   |"*(a-i-1))
-
     print("-"*(a*4+1))
 
 
 if __name__ == "__main__":
-    a = SolveNQ(int(input()))
-    boardbf = [[]]
-    boarddf = []
-    start_time = time.time()
-    result = a.byHeur()
-    print("--- %s seconds ---" % (time.time() - start_time))
-    print(result)
+    a = SolveNQ(int(input("Enter n:")))
+    resutl = a.solve()
